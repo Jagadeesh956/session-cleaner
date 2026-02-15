@@ -2,9 +2,6 @@ name: Build and Publish Repo session-cleaner
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 permissions:
   contents: read  # Needed to read Repo B source
