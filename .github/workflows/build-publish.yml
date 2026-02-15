@@ -11,7 +11,7 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
-      # 1️⃣ Checkout Repo B
+      # 1️⃣ Checkout Repo
       - uses: actions/checkout@v5
 
       # 2️⃣ Setup Java and Maven cache
@@ -20,12 +20,15 @@ jobs:
           java-version: '17'
           distribution: temurin
           cache: maven
-      # 4️⃣ Build Repo B project
+
+      - name: Set dynamic verion
+        run: mvn versions:set -DnewVersion=1.0.$(date +%Y%m%d%H%M%S) -f pom-self.xml
+      # 4️⃣ Build Repo project
       - name: Build Project
         run: mvn clean install -X -DskipTests -f pom-self.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
-      # 5️⃣ Publish Repo B artifact to GitHub Packages
+      # 5️⃣ Publish Repo artifact to GitHub Packages
       - name: Publish to GitHub Packages
         run: mvn deploy --batch-mode -DskipTests -f pom-self.xml
         env:
