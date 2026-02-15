@@ -30,6 +30,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
       # 5️⃣ Publish Repo B artifact to GitHub Packages
       - name: Publish to GitHub Packages
-        run: mvn deploy --batch-mode -DskipTests pom-self.xml
+        run: mvn deploy --batch-mode -DskipTests -f pom-self.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
