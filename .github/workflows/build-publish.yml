@@ -1,0 +1,36 @@
+name: Build and Publish Repo session-cleaer
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read  # Needed to read Repo B source
+  packages: write # Needed to publish Repo B packages
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      # 1️⃣ Checkout Repo B
+      - uses: actions/checkout@v5
+
+      # 2️⃣ Setup Java and Maven cache
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: temurin
+          cache: maven
+      # 4️⃣ Build Repo B project
+      - name: Build Project
+        run: mvn clean install -X -DskipTests
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
+
+      # 5️⃣ Publish Repo B artifact to GitHub Packages
+      - name: Publish to GitHub Packages
+        run: mvn deploy --batch-mode -DskipTests
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
