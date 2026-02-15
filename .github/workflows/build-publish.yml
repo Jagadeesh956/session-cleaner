@@ -25,12 +25,12 @@ jobs:
           cache: maven
       # 4️⃣ Build Repo B project
       - name: Build Project
-        run: mvn clean install -X -DskipTests
+        run: mvn clean install -X -DskipTests -f pom-self.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
 
       # 5️⃣ Publish Repo B artifact to GitHub Packages
       - name: Publish to GitHub Packages
-        run: mvn deploy --batch-mode -DskipTests
+        run: mvn deploy --batch-mode -DskipTests pom-self.xml
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
