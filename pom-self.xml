@@ -7,7 +7,9 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.10</version>
     </parent>
+    <groupId>com.self.learn</groupId>
     <artifactId>session-cleaner</artifactId>
+    <version>1.0.0</version>
     <description>This module is to validate session expiry</description>
     <url/>
     <licenses>
